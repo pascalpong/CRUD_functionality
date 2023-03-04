@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,19 +25,19 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/companies', function () {
-    return view('companies');
-})->middleware(['auth', 'verified'])->name('companies');
-
-Route::get('/employees', function () {
-    return view('employees');
-})->middleware(['auth', 'verified'])->name('employees');
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/companies', [CompanyController::class, 'index'])->name('companies');
     Route::resource('companies', CompanyController::class)->shallow()->only([
-        'update', 'edit', 'create', 'store', 'show'
+        'update', 'edit', 'create', 'store', 'show', 'destroy'
     ]);
+
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
+    Route::resource('employees', EmployeeController::class)->shallow()->only([
+        'update', 'edit', 'create', 'store', 'show', 'destroy'
+    ]);
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

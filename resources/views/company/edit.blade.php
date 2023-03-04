@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
+            {{ __('Create company +') }}
         </h2>
     </x-slot>
 
@@ -20,14 +20,14 @@
                             </p>
                         </header>
 
-                        <form method="post" action="{{ route('companies.store') }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('companies.store') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
                             @csrf
                             @method('post')
 
                             <input name="name" placeholder="Name">
                             <input name="address" placeholder="Address">
                             <input name="email" placeholder="Email">
-                            <input name="logo" placeholder="Logo">
+                            <input type="file" name="logo" placeholder="Logo">
                             <input name="website" placeholder="Website">
 
 

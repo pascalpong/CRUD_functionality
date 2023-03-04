@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
+            {{ __('Company Information') }}
         </h2>
     </x-slot>
 
@@ -19,24 +19,31 @@
                                 {{ __("Update company information") }}
                             </p>
                         </header>
-
-                        @php
-                            dd($company);
-                        @endphp
-
-                        <form method="post" action="{{ route('companies.store') }}" class="mt-6 space-y-6">
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong class="font-bold">{{ $error }}</strong>
+                            </div>
+                            @endforeach
+                        @endif
+                        @if(session()->has('message'))
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong class="font-bold">{{ session()->get('message') }}</strong>
+                            </div>
+                        @endif
+                        <form method="post" action="{{ route('companies.update',['company'=>$company]) }}" enctype="multipart/form-data" class="mt-6 space-y-6">
                             @csrf
-                            @method('post')
-
-                            {{-- <input name="name" placeholder="Name" value="{{ $company->name }}">
+                            @method('PUT')
+                            <input name="name" placeholder="Name" value="{{ $company->name }}">
                             <input name="address" placeholder="Address" value="{{ $company->address }}">
                             <input name="email" placeholder="Email" value="{{ $company->email }}">
-                            <input name="logo" placeholder="Logo" value="{{ $company->logo }}">
-                            <input name="website" placeholder="Website" value="{{ $company->website }}"> --}}
+                            <img src="{{ asset('/storage/'.$company->logo) }}" style="height:100px;width:100px;object-fit:cover;">
+                            <input name="logo" type="file" placeholder="Logo" value="{{ asset('/storage/'.$company->logo) }}">
+                            <input name="website" placeholder="Website" value="{{ $company->website }}">
 
 
                             <div class="flex items-center gap-4">
-                                <x-primary-button>{{ __('Create') }}</x-primary-button>
+                                <x-primary-button>{{ __('Update') }}</x-primary-button>
                             </div>
                         </form>
                     </section>

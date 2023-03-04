@@ -16,7 +16,10 @@ class CompanyController extends Controller
      */
     public function index()
     {
-
+        $companies = Company::paginate(10);
+        return view('companies',[
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -37,15 +40,25 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        if($request->hasFile('logo')){
+            $file = $request->file('logo');
+            $filename = $file->getClientOriginalName();
+            $file->storeAs('public/',$filename);
+        }
         $company = new Company();
         $company->name = $request->name;
         $company->address = $request->address;
+        $company->logo = $filename ?? null;
         $company->email = $request->email;
         $company->website = $request->website;
         $company->save();
 
         if($company)
-            return url("companies/{$company->id}");
+            return redirect("companies/$company->id")->with('message','Company created successfully');
     }
 
     /**
@@ -56,7 +69,8 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        $company = Company::find($id);
+        return view('company.show',['company'=>$company]);
     }
 
     /**
@@ -67,7 +81,7 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -79,7 +93,19 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $company = Company::find($id);
+        $company->name = $request->name;
+        $company->address = $request->address;
+        $company->email = $request->email;
+        $company->website = $request->website;
+        $company->save();
+
+        if($company)
+            return redirect()->back()->with('message', $company ? 'Updated' : 'Error');
     }
 
     /**
@@ -90,6 +116,10 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Company::find($id);
+        $company->delete();
+
+        if($company)
+            return back()->with('message', $company ? 'Deleted' : 'Error');
     }
 }
