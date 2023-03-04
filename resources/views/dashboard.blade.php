@@ -11,6 +11,16 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div>
+                <div class="sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('companies')" :active="request()->routeIs('companies')">
+                        {{ __('Companies') }}
+                    </x-nav-link>
+                </div>
+                <div class="sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
+                        {{ __('Employees') }}
+                    </x-nav-link>
+                </div>
             </div>
         </div>
     </div>

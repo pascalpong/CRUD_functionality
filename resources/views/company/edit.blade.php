@@ -19,17 +19,49 @@
                                 {{ __("Update company information") }}
                             </p>
                         </header>
-
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong class="font-bold">{{ $error }}</strong>
+                            </div>
+                            @endforeach
+                        @endif
                         <form method="post" action="{{ route('companies.store') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
                             @csrf
                             @method('post')
 
-                            <input name="name" placeholder="Name">
-                            <input name="address" placeholder="Address">
-                            <input name="email" placeholder="Email">
-                            <input type="file" name="logo" placeholder="Logo">
-                            <input name="website" placeholder="Website">
-
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        name
+                                    </label>
+                                    <input name="name" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Company name">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        address
+                                    </label>
+                                    <input name="address" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="address">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Email
+                                    </label>
+                                    <input name="email" placeholder="Email" value="{{ $company->email ?? '' }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Logo
+                                    </label>
+                                    <input type="file" name="logo" placeholder="Logo" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        name
+                                    </label>
+                                    <input name="website" placeholder="Website" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text">
+                                </div>
+                            </div>
 
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Create') }}</x-primary-button>

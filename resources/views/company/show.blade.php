@@ -34,12 +34,42 @@
                         <form method="post" action="{{ route('companies.update',['company'=>$company]) }}" enctype="multipart/form-data" class="mt-6 space-y-6">
                             @csrf
                             @method('PUT')
-                            <input name="name" placeholder="Name" value="{{ $company->name }}">
-                            <input name="address" placeholder="Address" value="{{ $company->address }}">
-                            <input name="email" placeholder="Email" value="{{ $company->email }}">
-                            <img src="{{ asset('/storage/'.$company->logo) }}" style="height:100px;width:100px;object-fit:cover;">
-                            <input name="logo" type="file" placeholder="Logo" value="{{ asset('/storage/'.$company->logo) }}">
-                            <input name="website" placeholder="Website" value="{{ $company->website }}">
+
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Name
+                                    </label>
+                                    <input name="name" placeholder="Name" value="{{ $company->name ?? '' }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Address
+                                    </label>
+                                    <input  name="address" placeholder="Address" value="{{ $company->address ?? '' }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Email
+                                    </label>
+                                    <input name="email" placeholder="Email" value="{{ $company->email ?? '' }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                                <div class="w-full px-3">
+                                    @if(!empty($company->logo))
+                                        <img src="{{ asset('/storage/'.$company->logo) }}" style="height:100px;width:100px;object-fit:cover;">
+                                    @endif
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Logo
+                                    </label>
+                                    <input name="logo" type="file" placeholder="Logo" value="{{ asset('/storage/'.$company->logo) }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Name
+                                    </label>
+                                    <input name="website" placeholder="Website" value="{{ $company->website ?? ''}}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
+                            </div>
 
 
                             <div class="flex items-center gap-4">

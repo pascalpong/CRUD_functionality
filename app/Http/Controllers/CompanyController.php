@@ -42,6 +42,7 @@ class CompanyController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|dimensions:min_width=100,min_width=100',
         ]);
 
         if($request->hasFile('logo')){

@@ -60,7 +60,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <p>No users</p>
+                                    <p>No company</p>
                                 @endforelse
                             </tbody>
                         </table>
